@@ -1,0 +1,188 @@
+{
+    "project": {},
+    "files": {
+        "public/sdk/bobik.js": {
+            "name": "public/sdk/bobik.js",
+            "modules": {},
+            "classes": {
+                "Bobik": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "Bobik": {
+            "name": "Bobik",
+            "shortname": "Bobik",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "public/sdk/bobik.js",
+            "line": 1,
+            "description": "Copyright (c) 2012 Bobik Inc\nVersion: 1.0\nLicensed under the MIT license:\nhttp://www.opensource.org/licenses/mit-license.php\n\nDownload this SDK from: <a href=\"http://usebobik.com/sdk\">http://usebobik.com/sdk</a>\n\nJavascript client library for interacting with Bobik REST API\n\n    var bobik = new Bobik(\"YOUR_AUTH_TOKEN\");\n    bobik.scrape({\n        urls: ['amazon.com', 'zynga.com', 'http://finance.google.com/', 'http://shopping.yahoo.com'],\n        queries:  [\"//th\", \"//img/@src\", \"return document.title\", \"return $('script').length\", \"#logo\", \".logo\"]\n      }, function (scraped_data) {\n        if (!scraped_data) {\n          console.log(\"Data is unavailable\");\n          return;\n        }\n        for (var url in scraped_data)\n          console.log(\"Results from \" + url + \": \" + scraped_data[url]);\n    });\n\nBobik Javascript API is designed for asynchronous use, which provides better user experience and performance.\nIf you use Bobik on server side, you can either make use of the `callback` paramer in the JSON request \nor build a synchronous wrapper similar to this SDK, which is fairly straightforward.",
+            "is_constructor": 1,
+            "example": [
+                "\n    var bobik_client = new Bobik(\"XXX\", 60000, true);\nNote that you don't need to pass 'auth_token' with every request if you use the Bobik object."
+            ],
+            "params": [
+                {
+                    "name": "auth_token",
+                    "description": "Authorization token",
+                    "type": "String"
+                },
+                {
+                    "name": "timeout_ms",
+                    "description": "How long to wait for the scraping job to complete (default is 30000 ms)",
+                    "type": "Integer"
+                },
+                {
+                    "name": "disable_debug_mode",
+                    "description": "If set, disables debug messages that SDK prints into the console",
+                    "type": "Boolean"
+                }
+            ]
+        }
+    },
+    "classitems": [
+        {
+            "file": "public/sdk/bobik.js",
+            "line": 38,
+            "description": "Authorization token",
+            "itemtype": "property",
+            "name": "auth_token",
+            "type": "{String}",
+            "class": "Bobik"
+        },
+        {
+            "file": "public/sdk/bobik.js",
+            "line": 46,
+            "description": "How long to wait for the scraping job to complete (default is 30000 ms)",
+            "itemtype": "property",
+            "name": "timeout_ms",
+            "type": "{String}",
+            "default": "30000",
+            "class": "Bobik"
+        },
+        {
+            "file": "public/sdk/bobik.js",
+            "line": 55,
+            "description": "Controls whether debug messages are printed to the console",
+            "itemtype": "property",
+            "name": "debug",
+            "type": "{Boolean}",
+            "default": "true",
+            "class": "Bobik"
+        },
+        {
+            "file": "public/sdk/bobik.js",
+            "line": 68,
+            "description": "Scrapes a list of urls using the given queries and makes a callback upon success",
+            "itemtype": "method",
+            "name": "scrape",
+            "params": [
+                {
+                    "name": "request",
+                    "description": "The JSON request object (see <a href=\"http://usebobik.com/api/docs\">API Docs</a> for details)",
+                    "type": "Object"
+                },
+                {
+                    "name": "handler",
+                    "description": "An asynchronous callback to receive the scraped data (`function(data)`)",
+                    "type": "Function"
+                }
+            ],
+            "class": "Bobik"
+        },
+        {
+            "file": "public/sdk/bobik.js",
+            "line": 86,
+            "description": "Called whenever progress information is available.\nFeel free to override this function (e.g. `bobik_client.progress = my_custom_func`)",
+            "itemtype": "method",
+            "name": "progress",
+            "params": [
+                {
+                    "name": "job_id",
+                    "description": "Job id",
+                    "type": "String"
+                },
+                {
+                    "name": "current_progress",
+                    "description": "A value between 0 and 1 that indicates the job's progress",
+                    "type": "Function"
+                }
+            ],
+            "class": "Bobik"
+        },
+        {
+            "file": "public/sdk/bobik.js",
+            "line": 100,
+            "description": "Call this function to wait for a job to complete",
+            "itemtype": "method",
+            "name": "wait_and_check",
+            "access": "protected",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "job_id",
+                    "description": "Job id",
+                    "type": "String"
+                },
+                {
+                    "name": "on_finished_callback",
+                    "description": "Function to be called upon expiration of `timeout_ms` or when results are ready",
+                    "type": "Function"
+                }
+            ],
+            "class": "Bobik"
+        },
+        {
+            "file": "public/sdk/bobik.js",
+            "line": 134,
+            "description": "The base function for all Bobik-related AJAX requests",
+            "itemtype": "method",
+            "name": "call_api",
+            "params": [
+                {
+                    "name": "http_method",
+                    "description": "post/get",
+                    "type": "String"
+                },
+                {
+                    "name": "data",
+                    "description": "The JSON request object (see <a href=\"http://usebobik.com/api/docs\">API Docs</a> for details)",
+                    "type": "Object"
+                },
+                {
+                    "name": "on_success",
+                    "description": "A handler function for receiving data (`function(data)`). Default handler just prints data to the console.",
+                    "type": "Function"
+                },
+                {
+                    "name": "on_error",
+                    "description": "A handler function for errors (`function(error)`).  Default handler just prints data to the console.",
+                    "type": "Function"
+                }
+            ],
+            "class": "Bobik"
+        },
+        {
+            "file": "public/sdk/bobik.js",
+            "line": 174,
+            "description": "A simple function that logs all progress messages\nFeel free to override this function (e.g. `bobik_client.log = my_custom_logger_func`)",
+            "itemtype": "method",
+            "name": "log",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "Any data that you want to log",
+                    "type": "Object"
+                }
+            ],
+            "class": "Bobik"
+        }
+    ]
+}

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>public&#x2F;sdk&#x2F;bobik.js</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.5.1&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.5.1&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/Bobik.html">Bobik</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: public&#x2F;sdk&#x2F;bobik.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&#x2F;**
+Copyright (c) 2012 Bobik Inc
+Version: 1.0
+Licensed under the MIT license:
+http:&#x2F;&#x2F;www.opensource.org&#x2F;licenses&#x2F;mit-license.php
+
+Download this SDK from: &lt;a href=&quot;http:&#x2F;&#x2F;usebobik.com&#x2F;sdk&quot;&gt;http:&#x2F;&#x2F;usebobik.com&#x2F;sdk&lt;&#x2F;a&gt;
+
+Javascript client library for interacting with Bobik REST API
+
+    var bobik = new Bobik(&quot;YOUR_AUTH_TOKEN&quot;);
+    bobik.scrape({
+        urls: [&#x27;amazon.com&#x27;, &#x27;zynga.com&#x27;, &#x27;http:&#x2F;&#x2F;finance.google.com&#x2F;&#x27;, &#x27;http:&#x2F;&#x2F;shopping.yahoo.com&#x27;],
+        queries:  [&quot;&#x2F;&#x2F;th&quot;, &quot;&#x2F;&#x2F;img&#x2F;@src&quot;, &quot;return document.title&quot;, &quot;return $(&#x27;script&#x27;).length&quot;, &quot;#logo&quot;, &quot;.logo&quot;]
+      }, function (scraped_data) {
+        if (!scraped_data) {
+          console.log(&quot;Data is unavailable&quot;);
+          return;
+        }
+        for (var url in scraped_data)
+          console.log(&quot;Results from &quot; + url + &quot;: &quot; + scraped_data[url]);
+    });
+
+Bobik Javascript API is designed for asynchronous use, which provides better user experience and performance.
+If you use Bobik on server side, you can either make use of the &#x60;callback&#x60; paramer in the JSON request 
+or build a synchronous wrapper similar to this SDK, which is fairly straightforward.
+
+@class Bobik
+@constructor
+@example
+    var bobik_client = new Bobik(&quot;XXX&quot;, 60000, true);
+Note that you don&#x27;t need to pass &#x27;auth_token&#x27; with every request if you use the Bobik object.
+@param {String} auth_token Authorization token
+@param {Integer} timeout_ms How long to wait for the scraping job to complete (default is 30000 ms)
+@param {Boolean} disable_debug_mode If set, disables debug messages that SDK prints into the console
+**&#x2F;
+var Bobik = function Bobik(auth_token, timeout_ms, disable_debug_mode) {
+  &#x2F;**
+  Authorization token
+  
+  @property auth_token
+  @type {String}
+  *&#x2F;
+  this.auth_token = auth_token;
+
+  &#x2F;**
+  How long to wait for the scraping job to complete (default is 30000 ms)
+  
+  @property timeout_ms
+  @type {String}
+  @default 30000
+  *&#x2F;
+  this.timeout_ms = timeout_ms ? timeout_ms : 30000;
+
+  &#x2F;**
+  Controls whether debug messages are printed to the console
+  
+  @property debug
+  @type {Boolean}
+  @default true
+  *&#x2F;
+  this.debug = !disable_debug_mode;
+}
+
+
+Bobik.prototype = {
+
+  &#x2F;**
+  Scrapes a list of urls using the given queries and makes a callback upon success
+
+  @method scrape
+  @param {Object} request The JSON request object (see &lt;a href=&quot;http:&#x2F;&#x2F;usebobik.com&#x2F;api&#x2F;docs&quot;&gt;API Docs&lt;&#x2F;a&gt; for details)
+  @param {Function} handler An asynchronous callback to receive the scraped data (&#x60;function(data)&#x60;)
+  **&#x2F;
+  scrape: function (request, handler) {
+    var obj_ref = this;
+    this.call_api(&#x27;post&#x27;, request, function (job) {
+      if (job.errors)
+        obj_ref.log(job.errors);
+      else
+        obj_ref.wait_and_check(job[&#x27;job&#x27;], handler);
+    });
+  },
+  
+
+  &#x2F;**
+  Called whenever progress information is available.
+  Feel free to override this function (e.g. &#x60;bobik_client.progress = my_custom_func&#x60;)
+
+  @method progress
+  @param {String} job_id Job id
+  @param {Function} current_progress A value between 0 and 1 that indicates the job&#x27;s progress
+  **&#x2F;
+  progress: function(job_id, current_progress) {
+    if (this.debug)
+      this.log(&quot;Current progress for job &quot; + job_id + &quot;: &quot; + (current_progress*100) + &quot;%&quot;);
+  },
+
+
+  &#x2F;**
+  Call this function to wait for a job to complete
+
+  @method wait_and_check
+  @protected
+  @param {String} job_id Job id
+  @param {Function} on_finished_callback Function to be called upon expiration of &#x60;timeout_ms&#x60; or when results are ready
+  **&#x2F;
+  wait_and_check: function (job_id, on_finished_callback, current_wait_time) {
+    var obj_ref = this;
+    this.call_api(&#x27;get&#x27;, {
+      job:        job_id
+    }, function(status) {
+      var current_progress = parseFloat(status[&#x27;progress&#x27;]);
+      obj_ref.progress(job_id, current_progress);
+      if (current_progress == 1.0 || current_wait_time &gt;= obj_ref.timeout_ms) {
+        on_finished_callback( status[&#x27;results&#x27;] );
+      }
+      else {
+        if (status[&#x27;estimated_time_left_ms&#x27;] == null) {
+          obj_ref.log(&quot;Error! &quot; + status.error)
+          return;
+        }
+        var ask_again_in_ms = parseFloat(status[&#x27;estimated_time_left_ms&#x27;])
+        setTimeout(function() {
+          if (current_wait_time == null)
+            current_wait_time = 0;
+          obj_ref.wait_and_check(job_id, on_finished_callback, current_wait_time + ask_again_in_ms)
+        }, ask_again_in_ms);
+      }
+    })
+  },
+
+
+  &#x2F;**
+  The base function for all Bobik-related AJAX requests
+
+  @method call_api
+  @param {String} http_method post&#x2F;get
+  @param {Object} data The JSON request object (see &lt;a href=&quot;http:&#x2F;&#x2F;usebobik.com&#x2F;api&#x2F;docs&quot;&gt;API Docs&lt;&#x2F;a&gt; for details)
+  @param {Function} on_success A handler function for receiving data (&#x60;function(data)&#x60;). Default handler just prints data to the console.
+  @param {Function} on_error A handler function for errors (&#x60;function(error)&#x60;).  Default handler just prints data to the console.
+  **&#x2F;
+  call_api: function(http_method, data, on_success, on_error) {
+    if (!data.auth_token)
+      data.auth_token = this.auth_token;
+    var obj_ref = this;
+    var default_handler = function(data) {
+      obj_ref.log(data);
+    };
+    var current_success_handler = on_success ? on_success : default_handler;
+    var current_error_handler = on_error ? on_error : default_handler;
+    $.ajax({
+      url: &quot;https:&#x2F;&#x2F;usebobik.com&#x2F;api&#x2F;v1&#x2F;jobs&quot;,
+      type: http_method,
+      data: data,
+      dataType: &#x27;json&#x27;,
+      crossDomain: true, &#x2F;&#x2F; Bobik servers support CORS (http:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Cross-Origin_Resource_Sharing)
+
+      beforeSend: function (xhr){
+        xhr.setRequestHeader(&quot;Accept&quot;, &quot;application&#x2F;json&quot;)
+      },
+
+      success: function(data, textStatus, jqXHR) {
+        current_success_handler(data)
+      },
+
+      error: function(jqXHR, textStatus, errorThrown) {
+        current_error_handler(errorThrown.toString())
+      }
+    });
+  },
+  
+  
+  &#x2F;**
+  A simple function that logs all progress messages
+  Feel free to override this function (e.g. &#x60;bobik_client.log = my_custom_logger_func&#x60;)
+
+  @method log
+  @param {Object} data Any data that you want to log
+  **&#x2F;
+  log: function(data) {
+    if (this.debug)
+      console.log(data);
+  }
+
+};
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

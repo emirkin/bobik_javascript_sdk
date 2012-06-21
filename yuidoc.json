@@ -1,0 +1,5 @@
+{
+    "name": "The Bobik API",
+    "description": "The Javascript client library for interacting with Bobik REST API",
+    "version": "1.0"
+}
