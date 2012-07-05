@@ -1,6 +1,6 @@
 ## Bobik SDK for Javascript
 
-This is a community-supported SDK for interacting with Bobik.
+This is a community-supported SDK for web scraping directly from Javascript using Bobik.
 
 ### Installing
 
